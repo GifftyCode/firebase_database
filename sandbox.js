@@ -27,6 +27,16 @@ const addPosts = (post, id) => {
 //   })
 //   .catch((err) => console.log(err));
 
+//removing data real-time from the database
+const deletePost = (id) => {
+  const listItems = document.querySelectorAll("li");
+  listItems.forEach((item) => {
+    if (item.getAttribute("data-id") === id) {
+      item.remove();
+    }
+  });
+};
+
 //getting real-time data from the database
 const unsuscribe = db.collection("posts").onSnapshot((snapshot) => {
   snapshot.docChanges().forEach((docChange) => {
