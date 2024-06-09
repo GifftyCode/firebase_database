@@ -43,3 +43,15 @@ form.addEventListener("submit", (e) => {
     .then(() => console.log("Post added successfully"))
     .catch((err) => console.log(err));
 });
+
+// deleting data from the database
+list.addEventListener("click", (e) => {
+  if (e.target.tagName === "BUTTON") {
+    const id = e.target.parentElement.getAttribute("data-id");
+    db.collection("posts")
+      .doc(id)
+      .delete()
+      .then(() => console.log("Post delected😥"))
+      .catch((err) => console.log(err));
+  }
+});
