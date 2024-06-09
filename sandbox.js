@@ -49,6 +49,14 @@ const unsuscribe = db.collection("posts").onSnapshot((snapshot) => {
   });
 });
 
+/* to unsubscribe fronm the real-time changes, we assign the db snapshot collection to a variable as a function and add an eventListener to the unsubscribe button on the html and pass in the function assigned to the db
+  i.e const unsuscribe = db.collection("posts").onSnapshot((snapshot) => {---}
+      */
+button.addEventListener("click", () => {
+  unsuscribe();
+  console.log("You have successfully unsubscribed! ");
+});
+
 //adding data to the database
 form.addEventListener("submit", (e) => {
   e.preventDefault();
