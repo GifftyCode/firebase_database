@@ -17,17 +17,29 @@ const addPosts = (post, id) => {
 };
 
 // getting data from the database
-db.collection("posts")
-  .get()
-  .then((snapshot) => {
-    snapshot.docs.forEach((doc) => {
-      console.log(doc.data(), doc.id);
-      addPosts(doc.data(), doc.id);
-    });
-  })
-  .catch((err) => console.log(err));
+// db.collection("posts")
+//   .get()
+//   .then((snapshot) => {
+//     snapshot.docs.forEach((doc) => {
+//       console.log(doc.data(), doc.id);
+//       addPosts(doc.data(), doc.id);
+//     });
+//   })
+//   .catch((err) => console.log(err));
 
-//adding data from the database
+//getting real-time data from the database
+const unsuscribe = db.collection("posts").onSnapshot((snapshot) => {
+  snapshot.docChanges().forEach((docChange) => {
+    const changes = docChange.doc;
+    if (docChange.type === "added") {
+      addPosts(changes.data(), changes.id);
+    } else if (docChange.type === "removed") {
+      deletePost(changes.id);
+    }
+  });
+});
+
+//adding data to the database
 form.addEventListener("submit", (e) => {
   e.preventDefault();
 
